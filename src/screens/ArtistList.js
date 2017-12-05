@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import Expo from 'expo'
 import { Card, Button, FormInput, FormLabel } from 'react-native-elements'
 import { Text, View, ScrollView, Image } from 'react-native';
 import { Header, CardSection } from '../components/common'
@@ -31,14 +32,18 @@ class ArtistList extends Component {
         return (
             this.state.artistData.data.results.artistmatches.artist.map((artist, index) => {
                 return (
-                <View key={index} style={{ alignItems: 'center', justifyContent: 'center'}}>
+                <View key={index} style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Card>
-                    <CardSection>
-                <Text style={{ fontWeight: 'bold' }}>{artist.name}</Text>
-                <Text>Listeners: {artist.listeners}</Text>
+                <CardSection>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontWeight: 'bold' }}>{artist.name}</Text>
+                        <Text>Listeners: {artist.listeners}</Text>
+                    </View>
                 </CardSection>
                 <CardSection>
-                <Image style={{ width: '100%', height: 200 }} />
+                <Image
+                source={{ uri: artist.image['3']['#text'] }}
+                style={{ width: '100%', height: 250 }} />
                 </CardSection>
                 <CardSection>
                 <Button
@@ -55,10 +60,10 @@ class ArtistList extends Component {
     }
     }
     render() {
-        
+        console.log(this.state.artistData)
         
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <Card>
                     <FormLabel>Artist Name</FormLabel>
                     <FormInput

@@ -27,11 +27,16 @@ class AlbumList extends Component {
                 <View key={index} style={{ alignItems: 'center', justifyContent: 'center'}}>
                 <Card>
                     <CardSection>
-                <Text style={{ fontWeight: 'bold' }}>{album.name}</Text>
-                <Text>{album.playcount} Times Played</Text>
-                </CardSection>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontWeight: 'bold' }}>{album.name}</Text>
+                        <Text>{album.playcount} Times Played</Text>
+                        </View>
+                    </CardSection>
                 <CardSection>
-                <Image style={{ width: '100%', height: 200 }} />
+                <Image 
+                source={{ uri: album.image['3']['#text'] }}
+                style={{ width: '100%', height: 250 }} 
+                />
                 </CardSection>
                 <CardSection>
                 <Button
