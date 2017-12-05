@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "My New Project",
-    "description": "An empty new project",
-    "slug": "my-new-project",
+    "name": "MU6",
+    "description": "App of Musix",
+    "slug": "my-music-app",
     "privacy": "public",
     "sdkVersion": "23.0.0",
     "version": "1.0.0",
@@ -15,7 +15,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "id.super.mu6"
+    },
+    "android": {
+      "package": "id.super.mu6"
     }
   }
 }

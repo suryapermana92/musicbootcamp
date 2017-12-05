@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { Header, CardSection } from '../components/common'
 import { Card, Button } from 'react-native-elements'
 import axios from 'axios'
@@ -12,13 +12,34 @@ class AlbumList extends Component {
         }
     }
     state = {
+        isLoading: true,
         albumData:'',
         artistName: this.props.navigation.state.params.artistName
     }
+    componentWillMount() {
+        this.setState({ isLoading: true })
+    }
     async componentDidMount() {
         this.setState({ albumData: await axios.get(`https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${this.state.artistName}&api_key=7daa24f97f9850401459cea9f552df2a&format=json`) })
+        this.setState({ isLoading: false })
+        if (this.state.albumData.data.topalbums.album.length === 0) {
+            alert('Album Not Found');
+        }
+    }
+    renderSpinner() {
+        if (this.state.isLoading) {
+            return ( 
+                <View style={{ height:'100%', justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator
+                size='large'
+               
+                />
+                </View>
+            )
+        }
     }
     renderAlbum() {
+        if (this.state.isLoading === false) {
         if (this.state.albumData) {
             console.log(this.state.albumData.data.topalbums.album)
         return (
@@ -34,7 +55,7 @@ class AlbumList extends Component {
                     </CardSection>
                 <CardSection>
                 <Image 
-                source={{ uri: album.image['3']['#text'] }}
+                source={{ uri: album.image['3']['#text'] || 'https://dummyimage.com/250x250/000/fff&text=No+Image' }}
                 style={{ width: '100%', height: 250 }} 
                 />
                 </CardSection>
@@ -50,14 +71,14 @@ class AlbumList extends Component {
                 );
             })
         );
-    }
+    }}
     }
     render() {
         console.log(this.state.albumName)
         return (
-            <View>
-                <Text>{this.props.navigation.state.params.name}</Text>
+            <View style={{ flex: 1 }}>
                 <ScrollView>
+                {this.renderSpinner()}
                 {this.renderAlbum()}
                 </ScrollView>
             </View>
