@@ -27,7 +27,7 @@ class TrackList extends Component {
     }
     renderTrack() {
         if (this.state.albumDetail) {
-            console.log(this.state.albumDetail)
+            console.log(this.state.albumDetail.data.album.tracks.track)
         return (
             this.state.albumDetail.data.album.tracks.track.map((track, index) => {
                 return (

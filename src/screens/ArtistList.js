@@ -24,9 +24,13 @@ class ArtistList extends Component {
     }
     
     async onSearchPress() {
+        try{
         this.setState({ artistData: await axios.get(`https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${this.state.keyword}&api_key=7daa24f97f9850401459cea9f552df2a&format=json`)});  
         this.setState({ isLoading: false })
         console.log(this.state.artistData.data.results.artistmatches.artist)
+        } catch (error) {
+            alert(error)
+        }
         if (this.state.artistData.data.results.artistmatches.artist.length === 0) {
             alert('Artist Not Found');
         }
@@ -86,6 +90,11 @@ class ArtistList extends Component {
                 icon={{ name: 'search' }}
                 title='Search'
                 onPress={() => {
+                    if (this.state.keyword === '') {
+                        return (
+                            alert('Please enter the artist name')
+                        )
+                    }
                 this.setState({ isLoading: true })
                 this.onSearchPress()
                 }}
